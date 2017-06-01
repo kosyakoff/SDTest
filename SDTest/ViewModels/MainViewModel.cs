@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDTest.Utility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,92 +10,6 @@ using System.Windows.Media;
 
 namespace SDTest.ViewModels
 {
-    public class InputDataManager
-    {
-        #region Public Methods
-
-        internal IEnumerable<InputObject> GenerateUnsortedList(List<Color> selectedColorsList, int numberOfResultingInputObjects)
-        {
-            var randomIndex = new Random();
-            int colorCount = selectedColorsList.Count;
-            List<InputObject> inputObjectList = new List<InputObject>();
-
-            for (int i = 0; i < numberOfResultingInputObjects; i++)
-            {
-                var randomColor = selectedColorsList.ElementAt(randomIndex.Next(colorCount));
-                yield return new InputObject(randomColor);
-            }
-        }
-
-        #endregion Public Methods
-
-        #region Internal Methods
-
-        internal List<InputObject> SortList(ObservableCollection<InputObject> inputObjectList, List<Color> selectedColorList)
-        {
-            var comparer = new InputObjectComparer(selectedColorList);
-            var OrderedList = new List<InputObject>(inputObjectList);
-            OrderedList.Sort(comparer);
-
-            return OrderedList;
-        }
-
-        #endregion Internal Methods
-    }
-
-    public class InputObject
-    {
-        #region Public Constructors
-
-        public InputObject(Color color)
-        {
-            InputColor = color;
-        }
-
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public Color InputColor { get; set; }
-
-        #endregion Public Properties
-    }
-
-    public class InputObjectComparer : IComparer<InputObject>
-    {
-        #region Private Fields
-
-        private List<Color> _colors = new List<Color>();
-
-        #endregion Private Fields
-
-        #region Public Constructors
-
-        public InputObjectComparer(List<Color> colors)
-        {
-            _colors = colors;
-        }
-
-        #endregion Public Constructors
-
-        #region Public Methods
-
-        public int Compare(InputObject x, InputObject y)
-        {
-            int xIndex = _colors.IndexOf(x.InputColor);
-            int yIndex = _colors.IndexOf(y.InputColor);
-
-            if (xIndex == yIndex)
-                return 0;
-            if (xIndex < yIndex)
-                return -1;
-
-            return 1;
-        }
-
-        #endregion Public Methods
-    }
-
     public class MainViewModel : INotifyPropertyChanged
     {
         #region Private Fields
@@ -176,7 +91,7 @@ namespace SDTest.ViewModels
 
         #region Internal Methods
 
-        internal void LogError(string message)
+        private void LogError(string message)
         {
             MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -230,37 +145,5 @@ namespace SDTest.ViewModels
         }
 
         #endregion Private Methods
-
-        #region Public Classes
-
-        public class RelayCommand : ICommand
-        {
-            private Action<object> execute;
-            private Func<object, bool> canExecute;
-
-            public event EventHandler CanExecuteChanged
-            {
-                add { CommandManager.RequerySuggested += value; }
-                remove { CommandManager.RequerySuggested -= value; }
-            }
-
-            public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-            {
-                this.execute = execute;
-                this.canExecute = canExecute;
-            }
-
-            public bool CanExecute(object parameter)
-            {
-                return this.canExecute == null || this.canExecute(parameter);
-            }
-
-            public void Execute(object parameter)
-            {
-                this.execute(parameter);
-            }
-        }
-
-        #endregion Public Classes
     }
 }
