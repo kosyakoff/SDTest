@@ -15,7 +15,7 @@ namespace SDTest.ViewModels
         #region Private Fields
 
         private readonly int _numberOfInputElements;
-        private InputDataManager _inputDataManager;
+        private IInputDataManager _inputDataManager;
         private Color _selectedColor1;
 
         private Color _selectedColor2;
@@ -51,8 +51,8 @@ namespace SDTest.ViewModels
         #region Public Properties
 
         public ICommand GenerateUnsortListCommand { get; set; }
-        public ObservableCollection<InputObject> InputObjectList { get; set; } = new ObservableCollection<InputObject>();
-        public List<InputObject> OrderedList { get; set; } = new List<InputObject>();
+        public ObservableCollection<IInputObject> InputObjectList { get; set; } = new ObservableCollection<IInputObject>();
+        public List<IInputObject> OrderedList { get; set; } = new List<IInputObject>();
 
         public Color SelectedColor1
         {
@@ -134,7 +134,7 @@ namespace SDTest.ViewModels
         {
             try
             {
-                OrderedList = _inputDataManager.SortList(InputObjectList, _selectedColorList);
+                OrderedList = _inputDataManager.SortList(InputObjectList, _selectedColorList).ToList();
             }
             catch (Exception ex)
             {

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 
 namespace SDTest
 {
-    public class InputObjectComparer : IComparer<InputObject>
+    public class InputObjectComparer : IComparer<IInputObject>
     {
         #region Private Fields
 
@@ -13,16 +14,16 @@ namespace SDTest
 
         #region Public Constructors
 
-        public InputObjectComparer(List<Color> colors)
+        public InputObjectComparer(IEnumerable<Color> colors)
         {
-            _colors = colors;
+            _colors = colors.ToList();
         }
 
         #endregion Public Constructors
 
         #region Public Methods
 
-        public int Compare(InputObject x, InputObject y)
+        public int Compare(IInputObject x, IInputObject y)
         {
             int xIndex = _colors.IndexOf(x.InputColor);
             int yIndex = _colors.IndexOf(y.InputColor);

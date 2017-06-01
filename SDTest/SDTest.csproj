@@ -63,6 +63,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Interfaces\IInputDataManager.cs" />
+    <Compile Include="Interfaces\IInputObject.cs" />
     <Compile Include="InputDataManager.cs" />
     <Compile Include="InputObject.cs" />
     <Compile Include="InputObjectComparer.cs" />

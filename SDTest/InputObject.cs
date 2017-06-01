@@ -2,7 +2,7 @@
 
 namespace SDTest
 {
-    public class InputObject
+    public class InputObject : IInputObject
     {
         #region Public Constructors
 

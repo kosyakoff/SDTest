@@ -6,15 +6,15 @@ using System.Windows.Media;
 
 namespace SDTest
 {
-    public class InputDataManager
+    public class InputDataManager : IInputDataManager
     {
         #region Internal Methods
 
-        internal IEnumerable<InputObject> GenerateUnsortedList(List<Color> selectedColorsList, int numberOfResultingInputObjects)
+        public IEnumerable<IInputObject> GenerateUnsortedList(IEnumerable<Color> selectedColorsList, int numberOfResultingInputObjects)
         {
             var randomIndex = new Random();
-            int colorCount = selectedColorsList.Count;
-            List<InputObject> inputObjectList = new List<InputObject>();
+            int colorCount = selectedColorsList.Count();
+            List<IInputObject> inputObjectList = new List<IInputObject>();
 
             for (int i = 0; i < numberOfResultingInputObjects; i++)
             {
@@ -23,10 +23,10 @@ namespace SDTest
             }
         }
 
-        internal List<InputObject> SortList(ObservableCollection<InputObject> inputObjectList, List<Color> selectedColorList)
+        public IEnumerable<IInputObject> SortList(IEnumerable<IInputObject> inputObjectList, IEnumerable<Color> selectedColorList)
         {
             var comparer = new InputObjectComparer(selectedColorList);
-            var OrderedList = new List<InputObject>(inputObjectList);
+            var OrderedList = new List<IInputObject>(inputObjectList);
             OrderedList.Sort(comparer);
 
             return OrderedList;
