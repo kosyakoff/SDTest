@@ -8,7 +8,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:SDTest.ViewModels"
     Title="SDTest"
-    Width="625"
+    Width="800"
     Height="350"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -16,25 +16,17 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <x:Array
-            xmlns:swm="clr-namespace:System.Windows.Media;assembly=PresentationCore"
-            x:Key="sourceColors"
-            Type="swm:Color">
-            <swm:Color A="255" R="255" />
-            <swm:Color A="255" G="255" />
-            <swm:Color A="255" B="255" />
-        </x:Array>
-
         <Style x:Key="SelectedColorListStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="SelectedIndex" Value="0" />
-            <Setter Property="Margin" Value="3,0" />
-            <Setter Property="ItemsSource" Value="{StaticResource sourceColors}" />
+            <Setter Property="IsSynchronizedWithCurrentItem" Value="False" />
+            <Setter Property="Margin" Value="3,2" />
+            <Setter Property="ItemsSource" Value="{Binding Path=SourceColors}" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Grid Height="18" Margin="0,0,0,2">
                             <Border
+                                Margin="10,0"
                                 VerticalAlignment="Stretch"
                                 BorderBrush="Black"
                                 BorderThickness="1"
@@ -49,6 +41,7 @@
             </Setter>
         </Style>
         <Style x:Key="SortListBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Margin" Value="3,3" />
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
@@ -94,16 +87,16 @@
                 </Grid.ColumnDefinitions>
                 <ListBox
                     Grid.Column="0"
-                    SelectedItem="{Binding Path=SelectedColor1}"
+                    SelectedItem="{Binding Path=SelectedColor1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource SelectedColorListStyle}" />
 
                 <ListBox
                     Grid.Column="1"
-                    SelectedItem="{Binding Path=SelectedColor2}"
+                    SelectedItem="{Binding Path=SelectedColor2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource SelectedColorListStyle}" />
                 <ListBox
                     Grid.Column="2"
-                    SelectedItem="{Binding Path=SelectedColor3}"
+                    SelectedItem="{Binding Path=SelectedColor3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource SelectedColorListStyle}" />
             </Grid>
         </GroupBox>
@@ -127,7 +120,6 @@
             <ListBox
                 Grid.Row="0"
                 Grid.Column="1"
-                Background="AliceBlue"
                 ItemsSource="{Binding Path=InputObjectList}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 Style="{StaticResource SortListBoxStyle}" />
@@ -136,7 +128,7 @@
                 Grid.Row="0"
                 Grid.Column="2"
                 Width="90"
-                Margin="3,0"
+                Margin="4,3"
                 Command="{Binding Path=GenerateUnsortListCommand}">
                 Генерировать
             </Button>
@@ -158,7 +150,7 @@
                 Grid.Row="1"
                 Grid.Column="2"
                 Width="90"
-                Margin="3,0"
+                Margin="4,3"
                 Command="{Binding Path=SortListCommand}">
                 Сортировать
             </Button>
