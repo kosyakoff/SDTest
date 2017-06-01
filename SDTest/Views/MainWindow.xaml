@@ -1,0 +1,168 @@
+﻿<Window
+    x:Class="SDTest.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SDTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:SDTest.ViewModels"
+    Title="SDTest"
+    Width="625"
+    Height="350"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <x:Array
+            xmlns:swm="clr-namespace:System.Windows.Media;assembly=PresentationCore"
+            x:Key="sourceColors"
+            Type="swm:Color">
+            <swm:Color A="255" R="255" />
+            <swm:Color A="255" G="255" />
+            <swm:Color A="255" B="255" />
+        </x:Array>
+
+        <Style x:Key="SelectedColorListStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="SelectedIndex" Value="0" />
+            <Setter Property="Margin" Value="3,0" />
+            <Setter Property="ItemsSource" Value="{StaticResource sourceColors}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Height="18" Margin="0,0,0,2">
+                            <Border
+                                VerticalAlignment="Stretch"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Mode=OneWay}" />
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SortListBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid
+                            Width="15"
+                            Height="15"
+                            Margin="0,0,0,2">
+                            <Border
+                                VerticalAlignment="Stretch"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Path=InputColor, Mode=OneWay}" />
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Margin="3" Header="Входные цвета">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ListBox
+                    Grid.Column="0"
+                    SelectedItem="{Binding Path=SelectedColor1}"
+                    Style="{StaticResource SelectedColorListStyle}" />
+
+                <ListBox
+                    Grid.Column="1"
+                    SelectedItem="{Binding Path=SelectedColor2}"
+                    Style="{StaticResource SelectedColorListStyle}" />
+                <ListBox
+                    Grid.Column="2"
+                    SelectedItem="{Binding Path=SelectedColor3}"
+                    Style="{StaticResource SelectedColorListStyle}" />
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="3,0"
+                VerticalAlignment="Center"
+                Text="Не сортированный список:" />
+            <ListBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Background="AliceBlue"
+                ItemsSource="{Binding Path=InputObjectList}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Style="{StaticResource SortListBoxStyle}" />
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="90"
+                Margin="3,0"
+                Command="{Binding Path=GenerateUnsortListCommand}">
+                Генерировать
+            </Button>
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="3,0"
+                VerticalAlignment="Center"
+                Text="Сортированный список:" />
+            <ListBox
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding Path=OrderedList}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Style="{StaticResource SortListBoxStyle}" />
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Width="90"
+                Margin="3,0"
+                Command="{Binding Path=SortListCommand}">
+                Сортировать
+            </Button>
+        </Grid>
+
+    </Grid>
+</Window>
