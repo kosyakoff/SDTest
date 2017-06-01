@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 
-namespace SDTest
+namespace SDTest.Common
 {
     public class InputDataManager : IInputDataManager
     {
-        #region Internal Methods
+        #region Public Methods
 
         public IEnumerable<IInputObject> GenerateUnsortedList(IEnumerable<Color> selectedColorsList, int numberOfResultingInputObjects)
         {
@@ -32,6 +31,6 @@ namespace SDTest
             return OrderedList;
         }
 
-        #endregion Internal Methods
+        #endregion Public Methods
     }
 }

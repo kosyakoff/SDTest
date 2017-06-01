@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Media;
 
-namespace SDTest
+namespace SDTest.Common
 {
     public class InputObjectComparer : IComparer<IInputObject>
     {

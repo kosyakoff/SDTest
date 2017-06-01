@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace SDTest
+namespace SDTest.Common
 {
     public interface IInputObject
     {

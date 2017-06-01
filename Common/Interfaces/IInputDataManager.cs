@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace SDTest
+namespace SDTest.Common
 {
     public interface IInputDataManager
     {
