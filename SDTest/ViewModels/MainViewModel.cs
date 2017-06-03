@@ -16,11 +16,8 @@ namespace SDTest.ViewModels
         #region Private Fields
 
         private readonly int _numberOfInputElements;
-        private IInputDataManager _inputDataManager;
         private Color _selectedColor1;
-
         private Color _selectedColor2;
-
         private Color _selectedColor3;
         private List<Color> _selectedColorList = new List<Color>();
 
@@ -34,11 +31,22 @@ namespace SDTest.ViewModels
             SourceColors.Add(SelectedColor2 = Colors.Green);
             SourceColors.Add(SelectedColor3 = Colors.Blue);
 
-            _numberOfInputElements = 25;
-            _inputDataManager = new InputDataManager();
+            PropertyChanged += new PropertyChangedEventHandler(SelectedColorChangedListener);
 
-            GenerateUnsortListCommand = new RelayCommand((obj) => GeneratesUnortList(), (obj) => true);
+            _numberOfInputElements = 25;
+
+            GenerateUnsortListCommand = new RelayCommand((obj) => GenerateUnortList(), (obj) => true);
             SortListCommand = new RelayCommand((obj) => SortList(), (obj) => { return InputObjectList != null && InputObjectList.Any(); });
+        }
+
+        private void SelectedColorChangedListener(object sender, PropertyChangedEventArgs e)
+        {
+            List<String> colorPropNames = new List<string>() { nameof(SelectedColor1), nameof(SelectedColor2), nameof(SelectedColor3) };
+            if (colorPropNames.Contains(e.PropertyName))
+            {
+                GetSelectedColors();
+            }
+            
         }
 
         #endregion Public Constructors
@@ -114,13 +122,18 @@ namespace SDTest.ViewModels
 
         #region Private Methods
 
-        private void GeneratesUnortList()
+        private void GetSelectedColors()
         {
             _selectedColorList = new List<Color> { SelectedColor1, SelectedColor2, SelectedColor3 }.Distinct().ToList();
+        }
+
+        private void GenerateUnortList()
+        {
+            GetSelectedColors();
             InputObjectList.Clear();
             try
             {
-                foreach (var inpObj in _inputDataManager.GenerateUnsortedList(_selectedColorList, _numberOfInputElements))
+                foreach (var inpObj in InputDataManager.GenerateUnsortedList(_selectedColorList, _numberOfInputElements))
                 {
                     InputObjectList.Add(inpObj);
                 }
@@ -128,6 +141,7 @@ namespace SDTest.ViewModels
             catch (Exception ex)
             {
                 LogError(ex.Message);
+                InputObjectList.Clear();
             }
         }
 
@@ -135,11 +149,13 @@ namespace SDTest.ViewModels
         {
             try
             {
-                OrderedList = _inputDataManager.SortList(InputObjectList, _selectedColorList).ToList();
+                OrderedList = InputDataManager.SortList(InputObjectList, _selectedColorList).ToList();
             }
             catch (Exception ex)
             {
                 LogError(ex.Message);
+                if (OrderedList != null)
+                    OrderedList.Clear();
             }
 
             OnPropertyChanged(nameof(OrderedList));

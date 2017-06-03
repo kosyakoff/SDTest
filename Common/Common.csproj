@@ -45,7 +45,6 @@
     <Compile Include="InputDataManager.cs" />
     <Compile Include="InputObject.cs" />
     <Compile Include="InputObjectComparer.cs" />
-    <Compile Include="Interfaces\IInputDataManager.cs" />
     <Compile Include="Interfaces\IInputObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

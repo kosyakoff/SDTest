@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
@@ -8,15 +9,21 @@ namespace SDTest.Common
     {
         #region Private Fields
 
-        private List<Color> _colors = new List<Color>();
+        private List<Color> _orderedColorList = new List<Color>();
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public InputObjectComparer(IEnumerable<Color> colors)
+        public InputObjectComparer(IEnumerable<Color> orderedColors)
         {
-            _colors = colors.ToList();
+            if (orderedColors == null)
+                throw new ArgumentNullException(nameof(orderedColors));
+
+            if (!orderedColors.Any())
+                throw new ArgumentException("Входной массив цветов не может быть пустым");
+
+            _orderedColorList = orderedColors.ToList();
         }
 
         #endregion Public Constructors
@@ -25,8 +32,13 @@ namespace SDTest.Common
 
         public int Compare(IInputObject x, IInputObject y)
         {
-            int xIndex = _colors.IndexOf(x.InputColor);
-            int yIndex = _colors.IndexOf(y.InputColor);
+            if (x == null)
+                throw new ArgumentException(nameof(x));
+            if (y == null)
+                throw new ArgumentException(nameof(y));
+
+            int xIndex = _orderedColorList.IndexOf(x.InputColor);
+            int yIndex = _orderedColorList.IndexOf(y.InputColor);
 
             if (xIndex == yIndex)
                 return 0;

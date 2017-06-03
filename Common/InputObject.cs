@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 
 namespace SDTest.Common
 {
@@ -8,6 +9,9 @@ namespace SDTest.Common
 
         public InputObject(Color color)
         {
+            if (color == null)
+                throw new ArgumentNullException(nameof(color));
+
             InputColor = color;
         }
 

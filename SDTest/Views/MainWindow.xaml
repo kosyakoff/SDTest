@@ -142,7 +142,7 @@
             <ListBox
                 Grid.Row="1"
                 Grid.Column="1"
-                ItemsSource="{Binding Path=OrderedList}"
+                ItemsSource="{Binding Path=OrderedList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 Style="{StaticResource SortListBoxStyle}" />
 
