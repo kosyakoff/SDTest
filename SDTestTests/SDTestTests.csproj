@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F32A035F-5283-4D4A-ACBC-7BB01022AABC}</ProjectGuid>
+    <ProjectGuid>{B9F45607-81ED-4DE5-9448-D48C86957CE7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonTests</RootNamespace>
-    <AssemblyName>CommonTests</AssemblyName>
+    <RootNamespace>SDTestTests</RootNamespace>
+    <AssemblyName>SDTestTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\Libs\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="MSTestExtensions">
       <HintPath>..\packages\MSTestExtensions.4.0.0\lib\MSTestExtensions.dll</HintPath>
     </Reference>
@@ -55,14 +58,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="InputDataManagerTests.cs" />
-    <Compile Include="InputObjectComparerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MainViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{092D3A9C-BE4C-4BF7-AAA9-43C52883FD1C}</Project>
+      <Project>{092d3a9c-be4c-4bf7-aaa9-43c52883fd1c}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDTest\SDTest.csproj">
+      <Project>{94759150-4D9B-4F8B-9F8A-9CC1D9AF5EC7}</Project>
+      <Name>SDTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

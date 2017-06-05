@@ -76,7 +76,6 @@ namespace SDTest.Common.Tests
         }
 
         ///SortList method tests
-        ///
 
         [TestMethod]
         public void SortList_Param_SelectedColorList_is_null_should_throw_ArgumentNullException()

@@ -39,16 +39,6 @@ namespace SDTest.ViewModels
             SortListCommand = new RelayCommand((obj) => SortList(), (obj) => { return InputObjectList != null && InputObjectList.Any(); });
         }
 
-        private void SelectedColorChangedListener(object sender, PropertyChangedEventArgs e)
-        {
-            List<String> colorPropNames = new List<string>() { nameof(SelectedColor1), nameof(SelectedColor2), nameof(SelectedColor3) };
-            if (colorPropNames.Contains(e.PropertyName))
-            {
-                GetSelectedColors();
-            }
-            
-        }
-
         #endregion Public Constructors
 
         #region Public Events
@@ -60,7 +50,9 @@ namespace SDTest.ViewModels
         #region Public Properties
 
         public ICommand GenerateUnsortListCommand { get; set; }
+
         public ObservableCollection<IInputObject> InputObjectList { get; set; } = new ObservableCollection<IInputObject>();
+
         public List<IInputObject> OrderedList { get; set; } = new List<IInputObject>();
 
         public Color SelectedColor1
@@ -94,18 +86,10 @@ namespace SDTest.ViewModels
         }
 
         public ICommand SortListCommand { get; set; }
+
         public ObservableCollection<Color> SourceColors { get; set; } = new ObservableCollection<Color>();
 
         #endregion Public Properties
-
-        #region Internal Methods
-
-        private void LogError(string message)
-        {
-            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        #endregion Internal Methods
 
         #region Protected Methods
 
@@ -122,15 +106,16 @@ namespace SDTest.ViewModels
 
         #region Private Methods
 
-        private void GetSelectedColors()
+        private void FormSelectedColors()
         {
             _selectedColorList = new List<Color> { SelectedColor1, SelectedColor2, SelectedColor3 }.Distinct().ToList();
         }
 
         private void GenerateUnortList()
         {
-            GetSelectedColors();
+            FormSelectedColors();
             InputObjectList.Clear();
+
             try
             {
                 foreach (var inpObj in InputDataManager.GenerateUnsortedList(_selectedColorList, _numberOfInputElements))
@@ -142,6 +127,20 @@ namespace SDTest.ViewModels
             {
                 LogError(ex.Message);
                 InputObjectList.Clear();
+            }
+        }
+
+        private void LogError(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void SelectedColorChangedListener(object sender, PropertyChangedEventArgs e)
+        {
+            List<String> colorPropNames = new List<string>() { nameof(SelectedColor1), nameof(SelectedColor2), nameof(SelectedColor3) };
+            if (colorPropNames.Contains(e.PropertyName))
+            {
+                FormSelectedColors();
             }
         }
 
