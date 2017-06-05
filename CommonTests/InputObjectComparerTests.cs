@@ -17,6 +17,9 @@ namespace SDTest.Common.Tests
 
         #region Public Methods
 
+        /// <summary>
+        /// Объекь с цветом в не списка выбранных будет всегда "меньше" чем объект с цветом в списке выбранных цветов
+        /// </summary>
         [TestMethod]
         public void Compare_If_inputObject_is_not_in_selectedColors_when_it_less_than_color_in_list()
         {

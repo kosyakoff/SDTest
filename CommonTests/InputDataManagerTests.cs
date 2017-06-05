@@ -19,8 +19,11 @@ namespace SDTest.Common.Tests
 
         #region Public Methods
 
+        /// <summary>
+        /// Все сгенерированные объекты должны иметь цвет из списка выбранных цветов
+        /// </summary>
         [TestMethod]
-        public void GenerateUnsortedList_AllOutputObjects_must_be_in_selectedColorList()
+        public void GenerateUnsortedList_All_output_objects_must_be_in_selectedColorList()
         {
             var list = InputDataManager.GenerateUnsortedList(FilledColorList, NumberOfResultingInputObjects).ToList();
 
@@ -29,6 +32,9 @@ namespace SDTest.Common.Tests
                 ));
         }
 
+        /// <summary>
+        /// Все сгенерированные объекты должны иметь цвет и не должные быть null
+        /// </summary>
         [TestMethod]
         public void GenerateUnsortedList_AllOutputObjects_must_be_not_null_and_have_color()
         {
@@ -45,6 +51,9 @@ namespace SDTest.Common.Tests
             var list = InputDataManager.GenerateUnsortedList(FilledColorList, NumberOfResultingInputObjects).ToList();
         }
 
+        /// <summary>
+        /// Число сгенерированных объектов должно равняться заданному параметру
+        /// </summary>
         [TestMethod]
         public void GenerateUnsortedList_numberOfInputObjects_25_should_equal_numberOfOutputObjects_25()
         {

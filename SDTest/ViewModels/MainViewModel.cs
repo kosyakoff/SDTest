@@ -27,12 +27,14 @@ namespace SDTest.ViewModels
 
         public MainViewModel()
         {
+            //Задаём исходные цвета для формирования объектов
             SourceColors.Add(SelectedColor1 = Colors.Red);
             SourceColors.Add(SelectedColor2 = Colors.Green);
             SourceColors.Add(SelectedColor3 = Colors.Blue);
 
             PropertyChanged += new PropertyChangedEventHandler(SelectedColorChangedListener);
 
+            //Количество генерируемых не сортированных объектов
             _numberOfInputElements = 25;
 
             GenerateUnsortListCommand = new RelayCommand((obj) => GenerateUnortList(), (obj) => true);
@@ -51,8 +53,14 @@ namespace SDTest.ViewModels
 
         public ICommand GenerateUnsortListCommand { get; set; }
 
+        /// <summary>
+        /// Не отсортированный список объектов
+        /// </summary>
         public ObservableCollection<IInputObject> InputObjectList { get; set; } = new ObservableCollection<IInputObject>();
 
+        /// <summary>
+        /// Отсортированный список объектов
+        /// </summary>
         public List<IInputObject> OrderedList { get; set; } = new List<IInputObject>();
 
         public Color SelectedColor1
@@ -111,6 +119,9 @@ namespace SDTest.ViewModels
             _selectedColorList = new List<Color> { SelectedColor1, SelectedColor2, SelectedColor3 }.Distinct().ToList();
         }
 
+        /// <summary>
+        /// Генерация не сортированного списка объектов
+        /// </summary>
         private void GenerateUnortList()
         {
             FormSelectedColors();
@@ -144,6 +155,10 @@ namespace SDTest.ViewModels
             }
         }
 
+        /// <summary>
+        /// Метод сортировки объектов по цветам, количество цветов для сортировки может быть меньшим
+        /// чем количество цветов используемых при генерации объектов
+        /// </summary>
         private void SortList()
         {
             try

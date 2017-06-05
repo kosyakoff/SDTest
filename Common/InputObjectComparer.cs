@@ -15,6 +15,10 @@ namespace SDTest.Common
 
         #region Public Constructors
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="orderedColors">Список цветов в заданном порядке, по которому будут соритроваться входные объекты</param>
         public InputObjectComparer(IEnumerable<Color> orderedColors)
         {
             if (orderedColors == null)

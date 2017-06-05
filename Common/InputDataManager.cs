@@ -9,6 +9,12 @@ namespace SDTest.Common
     {
         #region Public Methods
 
+        /// <summary>
+        /// Генерация не сортированного списка объектов с заданным цветом
+        /// </summary>
+        /// <param name="selectedColorsList">Список выбранных цветов, используется для задания цвета создаваемого объекта</param>
+        /// <param name="numberOfResultingInputObjects">Количество генерируемых объектов</param>
+        /// <returns></returns>
         public static IEnumerable<IInputObject> GenerateUnsortedList(IEnumerable<Color> selectedColorsList, int numberOfResultingInputObjects)
         {
             if (selectedColorsList == null)
@@ -31,6 +37,12 @@ namespace SDTest.Common
             }
         }
 
+        /// <summary>
+        /// Сортировка списка объектов
+        /// </summary>
+        /// <param name="unsortedObjectList">Список не отсортированных объектов</param>
+        /// <param name="selectedColorList">Список выбранных цветов, в зависимости от которых соритруются объекты</param>
+        /// <returns></returns>
         public static IEnumerable<IInputObject> SortList(IEnumerable<IInputObject> unsortedObjectList, IEnumerable<Color> selectedColorList)
         {
             if (unsortedObjectList == null)

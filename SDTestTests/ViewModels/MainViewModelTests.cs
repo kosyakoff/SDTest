@@ -66,9 +66,12 @@ namespace SDTest.ViewModels.Tests
         public void SortList_Should_sort_unsorted_input_objects_correctly()
         {
             var model = new MainViewModel();
+
+            //Получаем отсортированный список объектов
             model.GenerateUnsortListCommand.Execute(null);
             model.SortListCommand.Execute(null);
 
+            //Берём индексы всех красных, зеленых и белых объектов
             List<int> indexesOfAllRedObjects
                 = model.OrderedList.Where(x => x.InputColor.Equals(Colors.Red)).Select(x => model.OrderedList.IndexOf(x)).ToList();
             List<int> indexesOfAllGreenObjects
@@ -76,6 +79,7 @@ namespace SDTest.ViewModels.Tests
             List<int> indexesOfAllBlueObjects
       = model.OrderedList.Where(x => x.InputColor.Equals(Colors.Blue)).Select(x => model.OrderedList.IndexOf(x)).ToList();
 
+            //Проверка что индексы всех красных объектов меньше индексов зелёных
             bool allRedsAreLessThanGreen = true;
 
             if (indexesOfAllGreenObjects.Any() && indexesOfAllRedObjects.Any())
@@ -83,6 +87,7 @@ namespace SDTest.ViewModels.Tests
 
             Assert.IsTrue(allRedsAreLessThanGreen);
 
+            //Проверка что индексы всех зелёных объектов меньше индексов синих
             bool allGreenAreLessThanBlue = true;
 
             if (indexesOfAllGreenObjects.Any() && indexesOfAllBlueObjects.Any())
@@ -90,6 +95,7 @@ namespace SDTest.ViewModels.Tests
 
             Assert.IsTrue(allGreenAreLessThanBlue);
 
+            //Проверка что индексы всех красных объектов меньше индексов синих
             bool allRedAreLessThanBlue = true;
 
             if (indexesOfAllRedObjects.Any() && indexesOfAllBlueObjects.Any())
